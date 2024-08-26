@@ -19,7 +19,7 @@ You can pass any amount of iterators of sorted values to `sorted_chain()`.
 The result will be sorted, then.
 
 ```python
->>> from sorted_chain import sorted_chain, IterableIsNotSorted
+>>> from sorted_chain import sorted_chain
 >>> list(sorted_chain([1, 3, 5], [2, 4, 6]))
 [1, 2, 3, 4, 5, 6]
 
