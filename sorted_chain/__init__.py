@@ -18,5 +18,5 @@ __all__ = [
     "version",
     "__version_tuple__",
     "version_tuple",
-    "IterableIsNotSorted"
+    "IterableIsNotSorted",
 ]

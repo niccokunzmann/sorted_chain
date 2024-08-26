@@ -2,7 +2,7 @@
 
 import pytest
 
-from sorted_chain import sorted_chain, IterableIsNotSorted
+from sorted_chain import IterableIsNotSorted, sorted_chain
 
 
 def test_sorted_chain_integers():
@@ -98,6 +98,7 @@ def test_sorted_chain_with_objects_uncomparable():
     iterable2 = [A(2), A(4), A(6)]
     with pytest.raises(TypeError):
         list(sorted_chain(iterable1, iterable2))
+
 
 def test_sorted_chain_with_objects_wrong_order():
     """ValueError when input elements are not in order."""

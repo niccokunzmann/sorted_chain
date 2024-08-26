@@ -29,6 +29,7 @@ class IterableIsNotSorted(ValueError):
     in the same order as the `key` function suggests.
     """
 
+
 @total_ordering
 class _HeapEntry:
     """
@@ -125,17 +126,18 @@ def sorted_chain(
         element = heapq.heappop(heap)
         yield element.value
         for next_element in element.iterable:
-            next_heap_element =                 _HeapEntry(
-                    next_element,
-                    element.index,
-                    element.iterable,
-                    key(next_element),
-                    reverse,
-                )
+            next_heap_element = _HeapEntry(
+                next_element,
+                element.index,
+                element.iterable,
+                key(next_element),
+                reverse,
+            )
             if next_heap_element < element:
                 raise IterableIsNotSorted(
                     f"The values of iterable {element.index} are not in "
-                        "sorted order.")
+                    "sorted order."
+                )
             heapq.heappush(
                 heap,
                 next_heap_element,
@@ -143,7 +145,4 @@ def sorted_chain(
             break
 
 
-__all__ = [
-    "sorted_chain",
-    "IterableIsNotSorted"
-]
+__all__ = ["sorted_chain", "IterableIsNotSorted"]
