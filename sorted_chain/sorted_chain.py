@@ -145,4 +145,5 @@ def sorted_chain(
 
 __all__ = [
     "sorted_chain",
+    "IterableIsNotSorted"
 ]
