@@ -13,20 +13,20 @@ authors = [
 maintainers = [
   { name="Nicco Kunzmann", email="niccokunzmann@rambler.ru" },
 ]
-description = "Find out what happens in ICS calendar files - query and filter RFC 5545 compatible .ics files for events, journals, TODOs and more."
+description = "itertools.chain for sorted and endless iterators"
 readme = "README.md"
 requires-python = ">=3.9"
 # see https://pypi.python.org/pypi?%3Aaction=list_classifiers
 classifiers = [
-    "Development Status :: 4 - Beta",
-    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Operating System :: OS Independent",
-    "Topic :: Office/Business :: Scheduling",
+    "Intended Audience :: Developers",
 ]
 
 dependencies = []
@@ -34,7 +34,6 @@ dependencies = []
 [project.optional-dependencies]
 test = [
     "pytest",
-    "restructuredtext-lint"
 ]
 
 [tool.hatch.metadata.hooks.vcs.urls]
