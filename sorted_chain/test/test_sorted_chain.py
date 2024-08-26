@@ -26,8 +26,8 @@ def test_sorted_chain_with_key():
 
 def test_sorted_chain_reverse():
     """Test that sorted_chain works with reverse."""
-    iterable1 = [1, 3, 5]
-    iterable2 = [2, 4, 6]
+    iterable1 = reversed([1, 3, 5])
+    iterable2 = reversed([2, 4, 6])
     assert list(sorted_chain(iterable1, iterable2, reverse=True)) == [6, 5, 4, 3, 2, 1]
 
 
