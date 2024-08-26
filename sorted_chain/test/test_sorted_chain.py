@@ -14,13 +14,13 @@ def test_sorted_chain_integers():
 
 def test_sorted_chain_with_key():
     """Test that sorted_chain works with a key function."""
-    iterable1 = ["hello", "world"]
-    iterable2 = ["foo", "bar"]
+    iterable1 = ["hello333", "world4444"]
+    iterable2 = ["foo1", "bar22"]
     assert list(sorted_chain(iterable1, iterable2, key=len)) == [
-        "bar",
-        "foo",
-        "hello",
-        "world",
+        "foo1",
+        "bar22",
+        "hello333",
+        "world4444",
     ]
 
 
@@ -93,7 +93,7 @@ def test_sorted_chain_with_objects():
 
 
 def test_sorted_chain_with_objects_uncomparable():
-    """Test that sorted_chain raises TypeError when input elements are not comparable."""
+    """TypeError when input elements are not comparable."""
     iterable1 = [A(1), A(3), A(5)]
     iterable2 = [A(2), A(4), A(6)]
     with pytest.raises(TypeError):

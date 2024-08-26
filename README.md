@@ -14,6 +14,6 @@ pip install sorted_chain
 
 ```python
 >>> from sorted_chain import sorted_chain
->>> print(list(sorted_chain([1, 3, 5], [2, 4, 6])))
+>>> list(sorted_chain([1, 3, 5], [2, 4, 6]))
 [1, 2, 3, 4, 5, 6]
 ```

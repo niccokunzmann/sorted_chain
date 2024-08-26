@@ -14,7 +14,6 @@ This file should be tests, too:
 import doctest
 import importlib
 import os
-import sys
 from pathlib import Path
 
 import pytest
@@ -30,7 +29,8 @@ PYTHON_FILES = [
 ]
 
 MODULE_NAMES = [
-    "sorted_chain" + python_file.relative_to(MODULE_PATH).with_suffix("").as_posix().replace("/", ".")
+    "sorted_chain."
+    + python_file.relative_to(MODULE_PATH).with_suffix("").as_posix().replace("/", ".")
     for python_file in PYTHON_FILES
 ]
 
@@ -49,14 +49,13 @@ def test_docstring_of_python_file(module_name):
 
 # This collection needs to exclude .tox and other subdirectories
 
-DOCUMENTATION_PATH = Path(HERE).parent.parent.parent / "docs"
+DOCUMENTATION_PATH = Path(HERE).parent.parent
 
 try:
     DOCUMENT_PATHS = [
         DOCUMENTATION_PATH / subdir / filename
         for subdir in ["."]
-        for filename in (DOCUMENTATION_PATH / subdir).glob("*")
-        if filename.lower().endswith(".md")
+        for filename in (DOCUMENTATION_PATH / subdir).glob("*.md")
     ]
 except FileNotFoundError as e:
     raise OSError(
@@ -71,25 +70,14 @@ except FileNotFoundError as e:
     ],
 )
 def test_files_is_included(filename):
-    assert any(path.endswith(filename) for path in DOCUMENT_PATHS)
+    assert any(path.name == filename for path in DOCUMENT_PATHS), DOCUMENT_PATHS
 
 
 @pytest.mark.parametrize("document", DOCUMENT_PATHS)
-def test_documentation_file(document, tzp):
+def test_documentation_file(document):
     """This test runs doctest on a documentation file.
 
     functions are also replaced to work.
     """
-    try:
-        test_result = doctest.testfile(
-            document, module_relative=False, raise_on_error=True
-        )
-    except doctest.UnexpectedException as e:
-        ty, err, tb = e.exc_info
-        if issubclass(ty, ModuleNotFoundError) and err.name == "pytz":
-            pytest.skip("pytz not installed, skipping this file.")
-    finally:
-        tzp.use_zoneinfo()
-    assert (
-        test_result.failed == 0
-    ), f"{test_result.failed} errors in {document.name}"
+    test_result = doctest.testfile(document, module_relative=False, raise_on_error=False)
+    assert test_result.failed == 0, f"{test_result.failed} errors in {document.name}"
