@@ -76,6 +76,7 @@ expected:
 - v0.0.2
 
   - Correct metadata
+  - Correct license
 
 - v0.0.1
 
