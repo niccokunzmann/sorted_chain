@@ -98,3 +98,10 @@ def test_sorted_chain_with_objects_uncomparable():
     iterable2 = [A(2), A(4), A(6)]
     with pytest.raises(TypeError):
         list(sorted_chain(iterable1, iterable2))
+
+def test_sorted_chain_with_objects_wrong_order():
+    """ValueError when input elements are not in order."""
+    iterable1 = [3, 1, 5]
+    iterable2 = [2, 4, 6]
+    with pytest.raises(ValueError):
+        list(sorted_chain(iterable1, iterable2))

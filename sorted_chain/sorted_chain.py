@@ -19,6 +19,16 @@ if TYPE_CHECKING:
     from collections.abc import Iterable
 
 
+class IterableIsNotSorted(ValueError):
+    """
+    Raised if the elements from the input iterables are not in sorted order.
+
+    The exception is raised when `sorted_chain` detects that the elements
+    from the input iterables are not in sorted order. This can happen if the
+    input iterables are not sorted, or if the input iterables are not sorted
+    in the same order as the `key` function suggests.
+    """
+
 @total_ordering
 class _HeapEntry:
     """
@@ -97,6 +107,10 @@ def sorted_chain(
         that the lowest value is returned first.
     :return: An iterable of the elements from the input iterables in sorted
         order.
+
+    :raises TypeError: If the input iterables do not contain comparable
+        elements.
+    :raises ValueError: If the input iterables are not in sorted order.
     """
     key = key or (lambda x: x)
     heap: list[_HeapEntry] = []
@@ -111,15 +125,20 @@ def sorted_chain(
         element = heapq.heappop(heap)
         yield element.value
         for next_element in element.iterable:
-            heapq.heappush(
-                heap,
-                _HeapEntry(
+            next_heap_element =                 _HeapEntry(
                     next_element,
                     element.index,
                     element.iterable,
                     key(next_element),
                     reverse,
-                ),
+                )
+            if next_heap_element < element:
+                raise IterableIsNotSorted(
+                    f"The values of iterable {element.index} are not in "
+                        "sorted order.")
+            heapq.heappush(
+                heap,
+                next_heap_element,
             )
             break
 
