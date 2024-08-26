@@ -13,7 +13,10 @@ from __future__ import annotations
 
 import heapq
 from functools import total_ordering
-from typing import Any, Callable, Iterable
+from typing import TYPE_CHECKING, Any, Callable
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 
 @total_ordering

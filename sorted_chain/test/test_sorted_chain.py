@@ -77,6 +77,7 @@ class A:
             return NotImplemented
         return self.a == other.a
 
+
 def test_sorted_chain_with_objects():
     """Test that sorted_chain works with objects from class A."""
     iterable1 = [A(1), A(3), A(5)]
@@ -86,8 +87,7 @@ def test_sorted_chain_with_objects():
     iterable5 = [A(11)]
     assert list(
         sorted_chain(
-            iterable1, iterable2, iterable3, iterable4, iterable5,
-            key=lambda x: x.a
+            iterable1, iterable2, iterable3, iterable4, iterable5, key=lambda x: x.a
         )
     ) == [A(0), A(1), A(2), A(3), A(4), A(5), A(6), A(7), A(8), A(9), A(10), A(11)]
 
