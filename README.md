@@ -73,6 +73,10 @@ expected:
 
 ## Changelog
 
+- v0.0.2
+
+  - Correct metadata
+
 - v0.0.1
 
   - Initial release
