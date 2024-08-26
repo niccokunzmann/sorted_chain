@@ -70,3 +70,23 @@ expected:
 [1, -2, 3, -4, 5, -6]
 
 ```
+
+## Changelog
+
+- v0.0.1
+
+  - Initial release
+
+## New Releases
+
+For a new release:
+
+1. Edit the changelog section
+2. Commit the changes
+3. Let the GitHub Actions tests run
+4. Create a tag and push it: 
+
+```shell
+git tag v0.0.1
+git push origin v0.0.1
+```
