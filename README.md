@@ -89,7 +89,7 @@ For a new release:
 1. Edit the changelog section
 2. Commit the changes
 3. Let the GitHub Actions tests run
-4. Create a tag and push it: 
+4. Create a tag and push it:
 
 ```shell
 git tag v0.0.1
