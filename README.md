@@ -1,6 +1,9 @@
 # sorted_chain
 
-itertools.chain with sorted result
+`itertools.chain` with sorted result.
+
+This is a simple function. However, it is nice to have it tested and the edge cases taken care of.
+If you encounter any problem with this or like to extend it, please open an Issue or Pull Request!
 
 ## Installation
 
@@ -52,7 +55,7 @@ The input can be **generators**. Their values are only retrieved when needed.
 ...         break
 >>> next(large_generator1)  # this generator had reached 100
 101
->>> next(large_generator2)  # this generator was not used, yet
+>>> next(large_generator2)  # this one yielded 99 and 100, too
 101
 
 ```
