@@ -8,11 +8,13 @@ from the input iterables in sorted order.
 The function is designed to be used with other functions from the
 `itertools` module, such as `groupby` or `sorted`.
 """
-from __future__ import annotations
-import heapq
 
-from typing import Any, Callable, Iterable
+from __future__ import annotations
+
+import heapq
 from functools import total_ordering
+from typing import Any, Callable, Iterable
+
 
 @total_ordering
 class _HeapEntry:
@@ -21,8 +23,8 @@ class _HeapEntry:
     `key` attribute, and then by the `index` attribute.
     """
 
-    __slots__ = ('value', 'index', 'iterable', 'key')
-    
+    __slots__ = ("value", "index", "iterable", "key")
+
     def __init__(self, value: Any, index: int, iterable: Iterable[Any], key: Any):
         """
         Initialize a `HeapEntry` object.
@@ -37,7 +39,7 @@ class _HeapEntry:
         self.iterable = iterable
         self.key = key
 
-    def __lt__(self, other:_HeapEntry) -> bool:
+    def __lt__(self, other: _HeapEntry) -> bool:
         """
         Compare two heap entries.
 
@@ -46,19 +48,18 @@ class _HeapEntry:
         """
         if self.key < other.key:
             return True
-        elif self.key > other.key:
+        if self.key > other.key:
             return False
-        else:
-            return self.index < other.index
+        return self.index < other.index
 
-    def __eq__(self, other:_HeapEntry) -> bool:
+    def __eq__(self, other: _HeapEntry) -> bool:
         """
         Check if two heap entries are equal.
 
         The comparison is done by the `key` and `index` attributes.
         """
         return self.key == other.key and self.index == other.index
-    
+
     def __hash__(self) -> int:
         """
         Return a hash of the heap entry.
@@ -67,7 +68,12 @@ class _HeapEntry:
         """
         return hash((self.key, self.index))
 
-def sorted_chain(*iterables: Iterable[Any], key: Callable[[Any], Any] = None, reverse: bool = False) -> Iterable[Any]:
+
+def sorted_chain(
+    *iterables: Iterable[Any],
+    key: Callable[[Any], Any] | None = None,
+    reverse: bool = False,  # noqa: ARG001
+) -> Iterable[Any]:
     """Yield the elements from the endless iterables in sorted order.
 
     :param iterables: The iterables to be sorted.
@@ -76,7 +82,7 @@ def sorted_chain(*iterables: Iterable[Any], key: Callable[[Any], Any] = None, re
         value is None, which means that the elements themselves will be
         used as the comparison key.
     :param reverse: A boolean value indicating whether the elements should
-        be sorted in reverse order. The default value is False which implies 
+        be sorted in reverse order. The default value is False which implies
         that the lowest value is returned first.
     :return: An iterable of the elements from the input iterables in sorted
         order.
@@ -84,21 +90,21 @@ def sorted_chain(*iterables: Iterable[Any], key: Callable[[Any], Any] = None, re
     key = key or (lambda x: x)
     heap: list[_HeapEntry] = []
     for i, it in enumerate(iterables):
-        try:
-            first_element = next(it)
-        except StopIteration:
-            pass
-        else:
+        for first_element in it:
             heapq.heappush(heap, _HeapEntry(first_element, i, it, key(first_element)))
+            break
 
     while heap:
-        element = heapq.heappop(heap).value
-        yield element
-        try:
-            next_element = next(heap[-1].iterable)
-        except StopIteration:
-            pass
-        else:
-            heapq.heappush(heap, _HeapEntry(next_element, heap[-1].index, heap[-1].iterable, key(next_element)))
+        element = heapq.heappop(heap)
+        yield element.value
+        for next_element in element.iterable:
+            heapq.heappush(
+                heap,
+                _HeapEntry(
+                    next_element, heap[-1].index, heap[-1].iterable, key(next_element)
+                ),
+            )
+            break
 
-__all__ = ['sorted_chain']
+
+__all__ = ["sorted_chain"]
