@@ -34,6 +34,7 @@ dependencies = []
 [project.optional-dependencies]
 test = [
     "pytest",
+    "restructuredtext-lint"
 ]
 
 [tool.hatch.metadata.hooks.vcs.urls]
@@ -53,13 +54,13 @@ source = "vcs"
 local_scheme = "no-local-version"
 
 [tool.hatch.build.hooks.vcs]
-version-file = "ics_query/_version.py"
+version-file = "sorted_chain/_version.py"
 
 [tool.hatch.metadata]
 allow-direct-references = true
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 
 [tool.ruff.lint]
 select = ["ALL"]
