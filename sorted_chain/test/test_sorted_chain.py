@@ -123,3 +123,20 @@ def test_sorted_chain_with_objects_wrong_order():
         list(sorted_chain(iterable1, iterable2))
     with pytest.raises(IterableIsNotSorted):
         list(sorted_chain(iterable1, iterable2, reverse=True))
+
+
+def test_sorted_chain_with_objects_equal_several_times():
+    """Test that sorted_chain works with equal values several times in one iterator."""
+    iterable1 = [A(1), A(3), A(5)]
+    iterable2 = [A(1), A(1), A(3), A(3), A(5), A(5)]
+    assert list(sorted_chain(iterable1, iterable2, key=lambda x: x.a)) == [
+        A(1),
+        A(1),
+        A(1),
+        A(3),
+        A(3),
+        A(3),
+        A(5),
+        A(5),
+        A(5),
+    ]
